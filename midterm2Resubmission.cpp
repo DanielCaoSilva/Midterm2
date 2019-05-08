@@ -19,6 +19,9 @@ public:
 	std::string getName() { return name; }
 	int getAge() { return age; }
 	char getSex() { return sex; }
+	void setAge(int a) { age = a; }
+	void setSex(char s) { sex = s; }
+	void setName(std::string n) { name = n; }
 };
 class Child : public Human
 {
@@ -29,8 +32,8 @@ private:
 	Child();
 	friend class Parent;
 public:
-	Child(std::string n,int a,char s,std::string mN,std::string dN)
-		:Human(n,a,s),momName(mN),dadName(dN),allowance(0){}
+	Child(std::string n, int a, char s, std::string mN, std::string dN)
+		:Human(n, a, s), momName(mN), dadName(dN), allowance(0) {}
 	~Child() { }
 	int getAllowance() const { return allowance; }
 	void printParent() {
@@ -45,7 +48,7 @@ private:
 	std::vector<Child> childrens;
 	Parent();
 public:
-	Parent(std::string n, int a, char s) :Human(n, a, s) 
+	Parent(std::string n, int a, char s) :Human(n, a, s)
 	{
 
 	}
@@ -63,14 +66,18 @@ public:
 	}
 	void setChildAllowance(int a, Child& c)
 	{
-		c.allowance=a;
+		for (int i = 0; i < children.size(); i++)
+		{
+			if (children[i] == c.getName())
+				c.allowance = a;
+		}
 	}
 };
-void printInfo(Human &h)
+void printInfo(Human& h)
 {
-	printf("Name: %s\n",h.getName().c_str());
+	printf("Name: %s\n", h.getName().c_str());
 	printf("Age: %d\n", h.getAge());
-	printf("Sex: %c\n",h.getSex());
+	printf("Sex: %c\n", h.getSex());
 }
 int main()
 {
@@ -85,7 +92,7 @@ int main()
 	pVec[0].setChild(Maggie);
 	pVec[1].setChild(Lisa);
 	pVec[1].setChild(Bart);
-	pVec[1].setChild(Maggie);	
+	pVec[1].setChild(Maggie);
 	printf("Bart's Allowance: %d\n", Bart.getAllowance());
 	pVec[0].setChildAllowance(5, Bart);
 	printf("Bart's Allowance: %d\n", Bart.getAllowance());
@@ -93,5 +100,3 @@ int main()
 	printInfo(March);
 	printInfo(Lisa);
 }
-
-
